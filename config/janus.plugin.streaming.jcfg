@@ -1,0 +1,10 @@
+streams: {
+    id = 1
+    type = "rtp"
+    description = "Test Stream"
+    audio = false
+    video = true
+    videoport = 8004
+    videopt = 100
+    videortpmap = "VP8/90000"
+}
