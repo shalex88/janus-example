@@ -3,14 +3,13 @@
 # a daemon or in foreground, default interface to use, debug/logging level
 # and, if needed, shared apisecret and/or token authentication mechanism
 # between application(s) and Janus.
+# FIXME: use ARCH variable to set a proper path 'x86_64-linux-gnu' or 'aarch64-linux-gnu'
 general: {
-	ssl = false
-	bind_address = "127.0.0.1"
 	configs_folder = "/etc/janus"			# Configuration files folder
-	plugins_folder = "/usr/lib/x86_64-linux-gnu/janus/plugins"			# Plugins folder
-	transports_folder = "/usr/lib/x86_64-linux-gnu/janus/transports"	# Transports folder
-	events_folder = "/usr/lib/x86_64-linux-gnu/janus/events"			# Event handlers folder
-	loggers_folder = "/usr/lib/x86_64-linux-gnu/janus/loggers"			# External loggers folder
+	plugins_folder = "/usr/lib/aarch64-linux-gnu/janus/plugins"			# Plugins folder
+	transports_folder = "/usr/lib/aarch64-linux-gnu/janus/transports"	# Transports folder
+	events_folder = "/usr/lib/aarch64-linux-gnu/janus/events"			# Event handlers folder
+	loggers_folder = "/usr/lib/aarch64-linux-gnu/janus/loggers"			# External loggers folder
 
 		# The next settings configure logging
 	#log_to_stdout = false					# Whether the Janus output should be written
@@ -118,19 +117,6 @@ general: {
 									# API when performing the 'attach' request, but
 									# only if allow_loop_indication is set to true;
 									# it's set to false by default to avoid abuses.
-									# Don't change if you don't know what you're doing!
-	#task_pool_size = 100			# By default, while the Janus core is single thread
-									# when it comes to processing incoming messages, it
-									# also uses a task pool with an indefinite amount
-									# of helper threads spawned on demand to handle
-									# messages addressed to plugins. If you want to
-									# limit this task pool size with a maximum number
-									# of concurrent threads, set the 'task_pool_size'
-									# property accordingly: a value of '0' means
-									# 'indefinite' and is the default. Notice that
-									# threads are automatically destroyed when unused
-									# for a while, so whatever value you choose simply
-									# puts a cap on the maximum concurrency.
 									# Don't change if you don't know what you're doing!
 	#opaqueid_in_api = true			# Opaque IDs set by applications are typically
 									# only passed to event handlers for correlation
@@ -403,7 +389,8 @@ nat: {
 # names to identify the plugins to disable. By default all available
 # plugins are enabled and loaded at startup.
 plugins: {
-	disable = "libjanus_voicemail.so,libjanus_recordplay.so"
+	disable = "libjanus_voicemail.so, libjanus_sip.so, libjanus_recordplay.so, libjanus_textroom.so, libjanus_videoroom.so, libjanus_echotest.so, libjanus_nas.so, libjanus_nassip.so, libjanus_nisip.so, libjanus_nosip.so, libjanus_audiobridge.so"
+    enabled = "libjanus_streaming.so"
 }
 
 # You can choose which of the available transports should be enabled or
@@ -412,7 +399,8 @@ plugins: {
 # to identify the transports to disable. By default all available
 # transports are enabled and loaded at startup.
 transports: {
-	#disable = "libjanus_rabbitmq.so"
+    disable = "libjanus_http.so, libjanus_rabbitmq.so, libjanus_nanomsg.so, libjanus_pfunix.so, libjanus_mqtt.so"
+	enabled = "libjanus_websockets.so"
 }
 
 # As a core feature, Janus can log either on the standard output, or to
@@ -422,7 +410,7 @@ transports: {
 # use a comma separated list of logger file names to identify the loggers
 # to disable. By default all available loggers are enabled and loaded at startup.
 loggers: {
-	disable = "libjanus_jsonlog.so"
+	#disable = "libjanus_jsonlog.so"
 }
 
 # Event handlers allow you to receive live events from Janus happening
@@ -447,6 +435,6 @@ loggers: {
 events: {
 	#broadcast = true
 	#combine_media_stats = true
-	disable = "libjanus_sampleevh.so"
+    disable = "janus.eventhandler.sampleevh, janus.eventhandler.redis"
 	#stats_period = 5
 }

@@ -1,7 +1,7 @@
 streams: {
     id = 1
     type = "rtp"
-    description = "Test Stream"
+    description = "Camera1 stream"
     audio = false
     video = true
     videoport = 8004
