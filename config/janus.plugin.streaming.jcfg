@@ -1,39 +1,12 @@
 streams: {
-        type = "rtp"
-        id = 1234
-        description = "Multistream test 4 video"
-        media = (
-                {
-                        type = "video"
-                        mid = "v1"
-                        label = "Video stream #1"
-                        port = 5104
-                        pt = 100
-                        codec = "vp8"
-                },
-                {
-                        type = "video"
-                        mid = "v2"
-                        label = "Video stream #2"
-                        port = 5106
-                        pt = 100
-                        codec = "vp8"
-                },
-                {
-                        type = "video"
-                        mid = "v3"
-                        label = "Video stream #3"
-                        port = 5108
-                        pt = 100
-                        codec = "vp8"
-                },
-                {
-                        type = "video"
-                        mid = "v4"
-                        label = "Video stream #4"
-                        port = 5110
-                        pt = 100
-                        codec = "vp8"
-                }
-        )
+	type = "rtp"
+	id = 1
+	description = "Opus/VP8 live stream coming from external source"
+	metadata = "You can use this metadata section to put any info you want!"
+	audio = false
+	video = true
+	videoport = 5004
+	videopt = 100
+	videocodec = "vp8"
+	secret = "adminpwd"
 }

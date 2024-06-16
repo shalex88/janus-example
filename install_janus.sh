@@ -27,12 +27,6 @@ disable_by_default() {
     sudo systemctl disable janus
 }
 
-backup_janus_configs() {
-    if [ ! -d /etc/janus.backup ]; then
-        sudo cp -r $JANUS_DIR/etc/janus $JANUS_DIR/etc/janus.backup
-    fi
-}
-
 # Check if Janus is already installed
 if ! command -v janus &> /dev/null; then
     # Update system packages
@@ -40,7 +34,6 @@ if ! command -v janus &> /dev/null; then
     build_janus
     sudo ln -sf $JANUS_DIR/bin/janus /usr/local/bin/janus
     disable_by_default
-    backup_janus_configs
 fi
 
 # Create symlink to the new config
