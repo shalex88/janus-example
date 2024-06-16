@@ -9,7 +9,7 @@ start_stream() {
     echo "Starting the stream..."
     # GStreamer pipeline
     #TODO: Change the pipeline to match your camera settings and receive camera ID as an argument
-    pipeline="videotestsrc ! video/x-raw,width=640,height=480 ! videoconvert ! queue ! vp8enc ! rtpvp8pay ! udpsink host=127.0.0.1 port=8004"
+    pipeline="videotestsrc ! video/x-raw,width=640,height=480 ! videoconvert ! queue ! vp8enc ! rtpvp8pay ! udpsink host=127.0.0.1 port=5104"
     # Run the GStreamer pipeline in the background and redirect the output to /dev/null
     gst-launch-1.0 -v $pipeline > /dev/null 2>&1 &
     # Save the process ID of the pipeline

@@ -21,13 +21,15 @@ general: {
 									# to debug, supported values: err, warn, notice, info, debug, parser,
 									# header, ext, client, latency, user, count (plus 'none' and 'all')
 	#ws_acl = "127.,192.168.0."		# Only allow requests coming from this comma separated list of addresses
+	#ws_acl_forwarded = true		# Whether we should check the X-Forwarded-For header too for the ACL
+									# (default=false, since without a proxy in the middle this could be abused)
 }
 
 # If you want to expose the Admin API via WebSockets as well, you need to
 # specify a different server instance, as you cannot mix Janus API and
 # Admin API messaging. Notice that by default the Admin API support via
 # WebSockets is disabled.
-#admin: {
+admin: {
 	admin_ws = false					# Whether to enable the Admin API WebSockets API
 	admin_ws_port = 7188				# Admin API WebSockets server port, if enabled
 	#admin_ws_interface = "eth0"		# Whether we should bind this server to a specific interface only
@@ -39,7 +41,9 @@ general: {
 	#admin_wss_ip = "192.168.0.1"		# Whether we should bind this server to a specific IP address only
 	#admin_wss_unix = "/run/awss.sock"	# Use WebSocket server over UNIX socket instead of TCP
 	#admin_ws_acl = "127.,192.168.0."	# Only allow requests coming from this comma separated list of addresses
-#}
+	#admin_ws_acl_forwarded = true		# Whether we should check the X-Forwarded-For header too for the ACL
+										# (default=false, since without a proxy in the middle this could be abused)
+}
 
 # The HTTP servers created in Janus support CORS out of the box, but by
 # default they return a wildcard (*) in the 'Access-Control-Allow-Origin'
@@ -61,8 +65,8 @@ cors: {
 # 'ciphers' property accordingly (no limitation by default).
 # Examples of recommended cipher strings at https://cheatsheetseries.owasp.org/cheatsheets/TLS_Cipher_String_Cheat_Sheet.html
 certificates: {
-	cert_pem = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
-	cert_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
+	#cert_pem = "/path/to/cert.pem"
+	#cert_key = "/path/to/key.pem"
 	#cert_pwd = "secretpassphrase"
 	#ciphers = "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256"
 }
