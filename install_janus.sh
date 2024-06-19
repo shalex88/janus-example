@@ -9,6 +9,8 @@ install_dependencies() {
         libssl-dev libsofia-sip-ua-dev libglib2.0-dev \
         libopus-dev libogg-dev libcurl4-openssl-dev liblua5.3-dev \
         libconfig-dev pkg-config libtool automake libnice-dev libsrtp2-dev
+
+    install_websockets_deb
 }
 
 build_janus() {
@@ -25,6 +27,20 @@ build_janus() {
 disable_by_default() {
     sudo systemctl stop janus
     sudo systemctl disable janus
+}
+
+install_websockets() {
+    sudo apt install -y cmake
+    git clone https://libwebsockets.org/repo/libwebsockets -b v4.3-stable
+    cd libwebsockets
+    mkdir build
+    cd build
+    cmake -DLWS_MAX_SMP=1 -DLWS_WITHOUT_EXTENSIONS=0 -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_C_FLAGS="-fpic" ..
+    make && sudo make install
+}
+
+install_websockets_deb() {
+    sudo apt install -y libwebsockets-dev
 }
 
 # Check if Janus is already installed
