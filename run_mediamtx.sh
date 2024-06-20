@@ -10,16 +10,17 @@ install() {
     rm -rf "$temp_dir"
 }
 
-instll_config() {
+install_config() {
     cp config/mediamtx.yml ./mediamtx/mediamtx.yml
 }
 
 # Check if Janus is already installed
 if [ ! -f "mediamtx/mediamtx" ]; then
     install
-    instll_config
 fi
 
-./start_stream.sh all start
+install_config
 
+./start_stream.sh all start
 ./mediamtx/mediamtx ./mediamtx/mediamtx.yml
+./start_stream.sh all stop
