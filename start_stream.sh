@@ -1,7 +1,7 @@
 #!/bin/bash
 
 install_dependencies() {
-    sudo apt-get install -y gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly
+    sudo apt-get install -y gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-rtsp nvidia-l4t-gstreamer
 }
 
 # Function to start the stream
@@ -11,7 +11,7 @@ start_stream() {
     echo "Starting the stream..."
     # GStreamer pipeline
     #TODO: Change the pipeline to match your camera settings and receive camera ID as an argument
-    pipeline="videotestsrc ! video/x-raw,width=640,height=480 ! videoconvert ! queue ! vp8enc ! rtpvp8pay ! udpsink host=127.0.0.1 port=$port"
+    pipeline="videotestsrc ! video/x-raw,width=640,height=480,framerate=30/1 ! nvvidconv ! nvv4l2h264enc ! h264parse ! rtspclientsink location=rtsp://localhost:8554/stream$camera"
     # Run the GStreamer pipeline in the background and redirect the output to /dev/null
     gst-launch-1.0 -v $pipeline > /dev/null 2>&1 &
     # Save the process ID of the pipeline
@@ -23,7 +23,7 @@ stop_stream() {
     if [ -f /tmp/gst_pipeline_$1.pid ]; then
         echo "Stopping the stream..."
         # Kill the specific GStreamer pipeline process
-        kill $(cat /tmp/gst_pipeline_$1.pid)
+        kill $(cat /tmp/gst_pipeline_$1.pid) > /dev/null 2>&1
         rm /tmp/gst_pipeline_$1.pid
     else
         echo "Stream is not running."
@@ -37,22 +37,22 @@ case "$2" in
     start)
         case "$1" in
             1)
-                start_stream $1 5004
+                start_stream $1
                 ;;
             2)
-                start_stream $1 5006
+                start_stream $1
                 ;;
             3)
-                start_stream $1 5008
+                start_stream $1
                 ;;
             4)
-                start_stream $1 5010
+                start_stream $1
                 ;;
             all)
-                start_stream 1 5004
-                start_stream 2 5006
-                start_stream 3 5008
-                start_stream 4 5010
+                start_stream 1
+                start_stream 2
+                start_stream 3
+                start_stream 4
                 ;;
             *)
                 echo "Invalid camera ID."

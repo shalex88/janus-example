@@ -29,6 +29,12 @@ disable_by_default() {
     sudo systemctl disable janus
 }
 
+instll_config() {
+    sudo ln -sf "$SCRIPT_DIR/config/janus.jcfg" $JANUS_DIR/etc/janus/janus.jcfg
+    sudo ln -sf "$SCRIPT_DIR/config/janus.plugin.streaming.jcfg" $JANUS_DIR/etc/janus/janus.plugin.streaming.jcfg
+    sudo ln -sf "$SCRIPT_DIR/config/janus.transport.websockets.jcfg" $JANUS_DIR/etc/janus/janus.transport.websockets.jcfg
+}
+
 install_websockets() {
     sudo apt install -y cmake
     git clone https://libwebsockets.org/repo/libwebsockets -b v4.3-stable
@@ -50,11 +56,7 @@ if ! command -v janus &> /dev/null; then
     build_janus
     sudo ln -sf $JANUS_DIR/bin/janus /usr/local/bin/janus
     disable_by_default
+    instll_config
 fi
-
-# Create symlink to the new config
-sudo ln -sf "$SCRIPT_DIR/config/janus.jcfg" $JANUS_DIR/etc/janus/janus.jcfg
-sudo ln -sf "$SCRIPT_DIR/config/janus.plugin.streaming.jcfg" $JANUS_DIR/etc/janus/janus.plugin.streaming.jcfg
-sudo ln -sf "$SCRIPT_DIR/config/janus.transport.websockets.jcfg" $JANUS_DIR/etc/janus/janus.transport.websockets.jcfg
 
 janus -C $JANUS_DIR/etc/janus/janus.jcfg
