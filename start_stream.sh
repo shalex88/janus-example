@@ -20,12 +20,12 @@ start_stream() {
 # Function to stop the stream
 stop_stream() {
     if [ -f /tmp/gst_pipeline_$1.pid ]; then
-        echo "Stopping the stream..."
+        echo "Stopping the Camera$1..."
         # Kill the specific GStreamer pipeline process
         kill $(cat /tmp/gst_pipeline_$1.pid) > /dev/null 2>&1
         rm /tmp/gst_pipeline_$1.pid
     else
-        echo "Stream is not running."
+        echo "Camera$1 is not running"
     fi
 }
 
