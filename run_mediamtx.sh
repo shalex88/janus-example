@@ -11,7 +11,7 @@ install() {
 }
 
 install_config() {
-    cp config/mediamtx.yml ./mediamtx/mediamtx.yml
+    cp $SCRIPT_DIR/config/mediamtx.yml $SCRIPT_DIR/mediamtx/mediamtx.yml
 }
 
 # Check if Janus is already installed
@@ -21,6 +21,4 @@ fi
 
 install_config
 
-./start_stream.sh all start
-./mediamtx/mediamtx ./mediamtx/mediamtx.yml
-./start_stream.sh all stop
+$SCRIPT_DIR/mediamtx/mediamtx $SCRIPT_DIR/mediamtx/mediamtx.yml
