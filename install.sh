@@ -17,8 +17,5 @@ install_config() {
 # Check if Janus is already installed
 if [ ! -f "$SCRIPT_DIR/mediamtx/mediamtx" ]; then
     install
+    install_config
 fi
-
-install_config
-
-$SCRIPT_DIR/mediamtx/mediamtx $SCRIPT_DIR/mediamtx/mediamtx.yml
