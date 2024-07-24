@@ -5,7 +5,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 install() {
     temp_dir=$(mktemp -d)
 
-    if [ "$ARCH" == "aarch64" ]; then
+    if [ "$ARCH" == "arm64" ]; then
         arch="arm64v8"
     elif [ "$ARCH" == "x86_64" ]; then
         arch="amd64"
