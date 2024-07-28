@@ -7,11 +7,11 @@ install() {
 
     if [ "$ARCH" == "arm64" ]; then
         arch="arm64v8"
-    elif [ "$ARCH" == "x86_64" ]; then
-        arch="amd64"
+    else
+        arch=$ARCH
     fi
 
-    file_name="mediamtx_v1.8.3_linux_${arch}.tar.gz"
+    file_name="mediamtx_v1.8.3_linux_$arch.tar.gz"
     url="https://github.com/bluenviron/mediamtx/releases/download/v1.8.3/$file_name"
     wget -P "$temp_dir" $url
     mkdir -p $SCRIPT_DIR/mediamtx
